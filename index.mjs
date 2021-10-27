@@ -1,21 +1,19 @@
-import { execSync } from "child_process";
+#!/usr/bin/env bash
+":"; //# comment; exec /usr/bin/env node --input-type=module - "$@" < "$0"
+import { exec } from "child_process";
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
 import exitHook from "exit-hook";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 function getProcessToRun() {
   const processToRun = process.argv[2];
-  console.log(process.argv);
 
   if (!processToRun) throw new Error("You must indicate a process to run");
   return processToRun;
 }
 
 function runningFilePath() {
-  return path.join(__dirname, ".running");
+  return path.join(process.cwd(), ".running");
 }
 
 function runningFile() {
@@ -56,14 +54,19 @@ if (!getRunningProcesses().includes(processToRun)) {
 
   addProcess(processToRun);
   exitHook(() => removeProcess(processToRun));
-  try {
-    // We have to instantiate process
-    execSync(processToRun);
-  } catch (e) {
-    console.error(e);
-  } finally {
+  // We have to instantiate process
+  const subprocess = exec(processToRun);
+  subprocess.stdout.on("data", function (data) {
+    console.log(data.toString());
+  });
+
+  subprocess.stderr.on("data", function (data) {
+    console.error(data.toString());
+  });
+
+  subprocess.on("exit", function (code) {
     removeProcess(processToRun);
-  }
+  });
 } else {
   console.log("Singleton process already running, skipping");
 }
