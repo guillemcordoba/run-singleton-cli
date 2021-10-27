@@ -1,0 +1,35 @@
+{
+  "name": "run-singleton-cli",
+  "version": "0.0.1",
+  "description": "Node CLI tool to run a process only once in a directory",
+  "main": "index.js",
+  "bin": {
+    "run-singleton": "index.js"
+  },
+  "scripts": {
+    "test": "concurrently \"npm run singleton\" \"npm run singleton\"",
+    "singleton": "node index.js \"wait-on tcp:4000\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guillemcordoba/singleton-cli.git"
+  },
+  "keywords": [],
+  "author": "guillem.cordoba@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guillemcordoba/singleton-cli/issues"
+  },
+  "homepage": "https://github.com/guillemcordoba/singleton-cli#readme",
+  "dependencies": {
+    "exit-hook": "^3.0.0",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "url": "^0.11.0"
+  },
+  "type": "module",
+  "devDependencies": {
+    "concurrently": "^6.3.0",
+    "wait-on": "^6.0.0"
+  }
+}
