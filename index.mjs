@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-":"; //# comment; exec /usr/bin/env node --input-type=module - "$@" < "$0"
+#!/usr/bin/env node
+
 import { exec } from "child_process";
 import fs from "fs";
 import path from "path";
