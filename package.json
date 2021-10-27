@@ -1,6 +1,6 @@
 {
   "name": "run-singleton-cli",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Node CLI tool to run a process only once in a directory",
   "main": "index.mjs",
   "bin": {

@@ -40,6 +40,7 @@ function addProcess(process) {
 function removeProcess(processToRemove) {
   const runningProcesses = getRunningProcesses();
   const newProcesses = runningProcesses.filter((p) => p !== processToRemove);
+
   if (newProcesses.length === 0) {
     fs.rmSync(runningFilePath());
   } else {
@@ -50,23 +51,24 @@ function removeProcess(processToRemove) {
 const processToRun = getProcessToRun();
 
 if (!getRunningProcesses().includes(processToRun)) {
-  // Process is already running in this foler, do nothing and exit
-
   addProcess(processToRun);
-  exitHook(() => removeProcess(processToRun));
+  process.on('SIGINT', function() {
+    removeProcess(processToRun);
+  })
+  exitHook(() => {
+    removeProcess(processToRun);
+  });
+
   // We have to instantiate process
   const subprocess = exec(processToRun);
-  subprocess.stdout.on("data", function (data) {
-    console.log(data.toString());
-  });
 
-  subprocess.stderr.on("data", function (data) {
-    console.error(data.toString());
-  });
-
+  subprocess.stdout.pipe(process.stdout);
+  subprocess.stderr.pipe(process.stderr);
+  
   subprocess.on("exit", function (code) {
     removeProcess(processToRun);
   });
 } else {
+  // Process is already running in this foler, do nothing and exit
   console.log("Singleton process already running, skipping");
 }
