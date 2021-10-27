@@ -1,14 +1,14 @@
 {
   "name": "run-singleton-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Node CLI tool to run a process only once in a directory",
-  "main": "index.js",
+  "main": "index.mjs",
   "bin": {
-    "run-singleton": "index.js"
+    "run-singleton": "index.mjs"
   },
   "scripts": {
     "test": "concurrently \"npm run singleton\" \"npm run singleton\"",
-    "singleton": "node index.js \"wait-on tcp:4000\""
+    "singleton": "node index.mjs \"wait-on tcp:4000\""
   },
   "repository": {
     "type": "git",

@@ -27,7 +27,7 @@ function runningFile() {
 
 function getRunningProcesses() {
   const runningFileContents = runningFile();
-  return runningFileContents.split("\n").filter(p => !!p);
+  return runningFileContents.split("\n").filter((p) => !!p);
 }
 
 function setRunningProcesses(processes) {
@@ -55,10 +55,7 @@ if (!getRunningProcesses().includes(processToRun)) {
   // Process is already running in this foler, do nothing and exit
 
   addProcess(processToRun);
-  exitHook(() => {
-    console.log("hi");
-    removeProcess(processToRun);
-  });
+  exitHook(() => removeProcess(processToRun));
   try {
     // We have to instantiate process
     execSync(processToRun);
