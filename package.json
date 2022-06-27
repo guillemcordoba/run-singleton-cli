@@ -1,6 +1,6 @@
 {
   "name": "run-singleton-cli",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Node CLI tool to run a process only once in a directory",
   "main": "index.mjs",
   "bin": {
@@ -22,7 +22,9 @@
   },
   "homepage": "https://github.com/guillemcordoba/singleton-cli#readme",
   "dependencies": {
-    "exit-hook": "^3.0.0"
+    "exit-hook": "^3.0.0",
+    "proper-lockfile": "^4.1.2",
+    "ps-node": "^0.1.6"
   },
   "type": "module",
   "devDependencies": {
