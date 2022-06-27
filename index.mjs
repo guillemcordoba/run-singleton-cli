@@ -84,6 +84,7 @@ async function runSingleton() {
 
   while (!release) {
     try {
+      runningFile();
       release = lockfile.lockSync(runningFilePath());
     } catch (e) {
       await sleep(1);
